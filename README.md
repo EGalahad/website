@@ -20,7 +20,9 @@ Run `PAGES_HOME_DIR=/path/to/personal_website-dist bash scripts/build-pages.sh` 
 
 ## Automatic updates
 
-Personal homepage deployments trigger the existing Cloudflare Git integration. Create a production Deploy Hook for main in the Pages project settings. Save its URL as the GitHub Actions secret CLOUDFLARE_PAGES_DEPLOY_HOOK in this repository and both documentation repositories. Workflows call the hook after relevant changes. Never commit or print the hook URL.
+Personal homepage deployments trigger the existing Cloudflare Git integration. A repository webhook in each of website, sim2real and boltrt sends push events directly to the production Deploy Hook. GitHub Actions is not required. The hook URL is stored in repository webhook settings, never in source code.
+
+GitHub push webhooks cover all branches and all files. A push triggers a rebuild of the latest main branches; pushing a feature branch does not publish that branch. These rebuilds count against the shared Pages Free limit of 500 builds per month.
 
 Every deployment builds both sites. Failed builds leave the previous production deployment intact. Use the Cloudflare dashboard for rollbacks.
 
